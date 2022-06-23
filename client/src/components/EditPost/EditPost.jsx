@@ -45,7 +45,7 @@ export default function EditPost() {
     const sanitizeContent = content.trim();
     if (sanitizeContent.length < 10) {
       setError(true);
-      setErrorMessage("Content must be at least 200 characters long");
+      setErrorMessage("Content must be at least 10 characters long");
       setSubmitting(false);
       setTimeout(() => {
         setError(false);

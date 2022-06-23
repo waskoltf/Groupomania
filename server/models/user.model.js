@@ -1,29 +1,25 @@
 const mongoose = require("mongoose");
 
-const User = new mongoose.Schema(
-  {
+const User = new mongoose.Schema({
     name: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
+        unique: true,
     },
     email: {
-      type: String,
-      required: true,
-      unique: true,
+        type: String,
+        required: true,
+        unique: true,
     },
     password: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
-    blogs: [
-      {
+    blogs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Blog",
-      },
-    ],
-  },
-  { collection: "user-data" }
-);
+    }, ],
+}, { collection: "user-data" });
 
 const model = mongoose.model("UserData", User);
 

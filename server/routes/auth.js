@@ -7,29 +7,31 @@ const User = require("../models/user.model");
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
 
-Router.post("/register", async (req, res) => {
+Router.post("/register", async(req, res) => {
     const { name, email, password } = req.body;
-
+    const user1 = await User.findOne({ name });
+    if (user1) {
+        return res.status(400).send({ error: "User already exists, please change the username" });
+    }
     const user = await User.findOne({ email });
     if (user) {
-        return res.status(400).send({ error: "User already exists" });
+        return res.status(400).send({ error: "User already exists, please change the email" });
     }
-    bcrypt.hash(password, saltRounds, async (err, hash) => {
+    bcrypt.hash(password, saltRounds, async(err, hash) => {
         if (err) {
             return res.status(500).send({ error: "Internal server error" });
         }
         try {
             const newUser = await User.create({ name, email, password: hash });
             return res.status(201).send({ user: newUser });
-        }
-        catch (err) {
+        } catch (err) {
             return res.status(500).send({ error: "Internal server error" });
         }
     });
 });
 
 
-Router.post("/login", async (req, res) => {
+Router.post("/login", async(req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
@@ -38,7 +40,7 @@ Router.post("/login", async (req, res) => {
         return res.status(404).send({ error: "User not found" });
     }
 
-    bcrypt.compare(password, user.password, async (err, result) => {
+    bcrypt.compare(password, user.password, async(err, result) => {
         if (err) {
             return res.status(500).send({ error: "Internal server error" });
         }

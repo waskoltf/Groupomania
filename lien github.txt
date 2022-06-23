@@ -1,0 +1,3 @@
+https://github.com/waskoltf/Groupomania/blob/main/README.md
+
+acces base de donnée (mongoDB Atlas:MONGO_URL)='mongodb+srv://wasse:wasko2@cluster0.waern.mongodb.net/groupomania?retryWrites=true&w=majority'
